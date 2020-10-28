@@ -85,6 +85,22 @@ class UserDao {
 
         return affectedRows;
     }
+
+    async getByEmail(email) {
+        try {
+            const response = await User.findOne({
+                where: {
+                    email: email,
+                    enable: 1
+                },
+                attributes: ['id', 'name', 'level', 'password', 'company']
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }
 
 export default new UserDao();

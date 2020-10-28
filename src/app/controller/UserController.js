@@ -1,4 +1,7 @@
+import jwt from 'jsonwebtoken';
 import UserDao from '../dao/UserDao';
+import User from '../model/User';
+import authConfig from '../../config/auth';
 
 class UserController {
 
@@ -27,8 +30,7 @@ class UserController {
       status = 500;
     }    
 
-    return res.json(result)
-              .status(status);    
+    return res.status(status).json(result);    
   }
 
   async update(req,res) {
@@ -42,7 +44,7 @@ class UserController {
         msg: unmodifiedUser.message,
       }
 
-      return res.json(result).status(500);
+      return res.status(500).json(result);
     }
 
     const modifiedUser = {
@@ -75,8 +77,7 @@ class UserController {
       status = 500;
     }   
 
-    return res.json(result)
-              .status(status); 
+    return res.status(status).json(result); 
   }
 
   async getAll(req,res) {
@@ -110,8 +111,43 @@ class UserController {
       status = 500;
     }   
 
-    return res.json(result)
-              .status(status);
+    return res.status(status)
+              .json(result);
+  }
+
+  async login(req,res) {
+    const {email, password} = req.body;
+
+    var user = await UserDao.getByEmail(email);
+
+    if (!(user instanceof User))
+    {
+      if(user === null) {
+        return res.status(401).json({error: 'User not found.'});
+      }
+      else {
+        return res.status(500).json({error: unmodifiedUser.message});
+      }      
+    }
+
+    if (!(await user.checkPassword(password))) {
+      return res.status(401).json({error: 'The password is wrong.'})
+    }
+
+    const {id, name, level, company} = user;
+
+    return res.json({
+      user: {
+        id,
+        name,
+        level,
+        company
+      },
+      token: jwt.sign({id}, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
+      })
+    });
+    
   }
   
 }
