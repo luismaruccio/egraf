@@ -125,7 +125,7 @@ async function falseDelete(id){
 async function getByEmail(email) {
     const query = `
     SELECT
-        id
+        id,
         name,
         email,
         password,
