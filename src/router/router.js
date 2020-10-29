@@ -18,6 +18,11 @@ const users = require('../controller/user')
 /**
  * Routes
  */
+
+router.route('/').get(function(req, res, next) {
+    return res.status(200).send("Hi, it's a simple api!")
+})
+
 router.route('/login').post(users.login)
  
 router.use(authMiddleware);
