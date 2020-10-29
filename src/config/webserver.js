@@ -1,3 +1,3 @@
 module.exports = {
-    webServerPort: 3500
+    webServerPort: process.env.PORT || 3500
 }
