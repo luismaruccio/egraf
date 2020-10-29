@@ -1,9 +1,8 @@
-import jwt from 'jsonwebtoken';
-import { promisify } from 'util';
+const jwt = require('jsonwebtoken');
 
-import authConfig from '../../config/auth';
+const authConfig = require('../config/auth');
 
-export default async (req, res, next) => {
+module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -13,9 +12,10 @@ export default async (req, res, next) => {
   const [, token] = authHeader.split(' ');
 
   try {
-    const decoded = await promisify(jwt.verify)(token, authConfig.secret);
+    const decoded = jwt.verify(token, authConfig.secret);
 
     req.id = decoded.id;
+    //req.company = decoded.company;
 
     return next();
   } catch (err) {

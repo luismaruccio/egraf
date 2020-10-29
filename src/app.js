@@ -1,27 +1,69 @@
-import express from 'express';
-import path from 'path';
-import cors from 'cors';
-import routes from './routes';
+/**
+ * Dependencies
+ */
+const webServer = require('./webserver/webserver')
+const pool = require('./database/mariadb')
 
-import './database';
-
-class App {
-    constructor() {
-        this.server = express();
-
-        this.middlewares();
-        this.routes();
+/**
+ * Startup the webServer Module
+ */
+async function startUp(){
+    console.log('Starting..')
+    
+    try {
+        console.log('Starting the Web Server.. ')
+        await webServer.initialize()
+    } catch (error) {
+        console.log(error)
+        process.exit(1)
     }
+}
+startUp()
 
-    middlewares() {
-        this.server.use(express.json());
-        this.server.use(cors());
-        this.server.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'resources')));
+/**
+ * Stops the webServer Modules and Pool Connection
+ * @param {*} e 
+ */
+async function shutdown(e){
+    let err = e
+    console.log('Stoping the Web Server')
+        
+    try{
+        console.log('Closing the connection pool..')
+        await pool.endPool()
+    }catch (error) {
+        console.error(e)
+        err = error
     }
-
-    routes() {
-        this.server.use(routes);
+    
+    if(err){
+        process.exit(1) //Encerrado com Erro
+    }else{
+        process.exit(0)
     }
 }
 
-export default new App().server;
+/**
+ * Get SIGTERM (Terminate Apllication)
+ */
+process.on('SIGTERM', () =>{
+    console.log('SIGTERM recived')
+    shutdown()
+})
+
+/**
+ * Get SIGINT (Interrupt the Application)
+ */
+process.on('SIGINT', () => {
+    console.log('SIGINT recived')
+    shutdown()
+})
+
+/**
+ * End Application on Uncaught Exception
+ */
+process.on('uncaughtException', err => {
+    console.log('Uncaught exception')
+    console.log(err)
+    shutdown(err)
+})
