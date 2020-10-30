@@ -150,9 +150,32 @@ async function getByEmail(email) {
     }
 }
 
+async function hasEmail(email) {
+    const query = `
+    SELECT
+        count(*) as qtd
+    FROM
+        users
+    WHERE
+        email = ? and
+        enable = 1 
+    `;
+
+    const parms = Object.assign({}, [email])
+
+    try {
+        const queryResult = await database.executeQuery(query, parms);
+        const [count, meta] = await queryResult;
+        return count.qtd
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports.insertUser = insert
 module.exports.updateUser = update
 module.exports.deleteUser = falseDelete
 module.exports.getUserById = getById
 module.exports.getUserByEmail = getByEmail
 module.exports.getAllUser = getAll
+module.exports.hasEmail = hasEmail

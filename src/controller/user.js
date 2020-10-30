@@ -14,7 +14,14 @@ async function insertUser(req, res, next){
 
 
     if(!req.body || req.body === ''){
-        res.status(400).send({ message: 'The request body is empty!' }).end()
+        res.status(400).send({ message: 'O corpo da requisição está em branco.' }).end()
+        return null
+    }
+
+    const emails = await mUser.hasEmail(req.body.email);
+
+    if (emails > 0) {
+        res.status(400).send({ message: 'Email já está cadastrado!'}).end()
         return null
     }
    
@@ -55,7 +62,7 @@ async function getAll(req, res, next){
 async function update(req, res, next){
 
     if(!req.body || req.body === ''){
-        res.status(400).send({ message: 'The request body is empty!' }).end()
+        res.status(400).send({ message: 'O corpo da requisição está em branco.' }).end()
         return null
     }
 
@@ -64,7 +71,7 @@ async function update(req, res, next){
     const originalUser = await mUser.getUserById(id);
 
     if (originalUser  === undefined) {
-        res.status(400).send({ message: 'User not found.' }).end();
+        res.status(400).send({ message: 'Usuário não encontrado.' }).end();
         return null
     }
    
@@ -94,7 +101,7 @@ async function update(req, res, next){
 async function deleteUser(req, res, next){
 
     if(!req.body || req.body === ''){
-        res.status(400).send({ message: 'The request body is empty!' }).end()
+        res.status(400).send({ message: 'O corpo da requisição está em branco.' }).end()
         return null
     }
 
@@ -103,7 +110,7 @@ async function deleteUser(req, res, next){
     const originalUser = await mUser.getUserById(id);
 
     if (originalUser  === undefined) {
-        res.status(400).send({ message: 'User not found.' }).end();
+        res.status(400).send({ message: 'Usuário não encontrado.' }).end();
         return null
     }
    
@@ -122,7 +129,7 @@ async function deleteUser(req, res, next){
 async function login(req, res, next) {
 
     if(!req.body || req.body === ''){
-        res.status(400).send({ message: 'The request body is empty!' }).end()
+        res.status(400).send({ message: 'O corpo da requisição está em branco.' }).end()
         return null
     }
 
@@ -131,12 +138,12 @@ async function login(req, res, next) {
     var user = await mUser.getUserByEmail(email);
 
     if(user === undefined) {
-        res.status(400).send({error: 'User not found.'}).end();
+        res.status(400).send({error: 'Usuário não encontrado.'}).end();
         return null
     }     
 
     if (!(await cryptHelper.checkPassword(user.password, password))) {
-      res.status(401).send({error: 'The password is wrong.'}).end()
+      res.status(401).send({error: 'A senha informada está incorreta.'}).end()
       return null
     }
 
