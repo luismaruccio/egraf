@@ -54,9 +54,10 @@ async function getAll(req, res, next){
 
     console.log(req);
 
+    const company = req.authCompany;
 
     try {
-        const users = await mUser.getAllUser();
+        const users = await mUser.getAllUser(company);
         return res.status(200).send({users})
     } catch (error) {
         next(error)
@@ -157,7 +158,7 @@ async function login(req, res, next) {
         level,
         company
       },
-      token: jwt.sign({id}, authConfig.secret, {
+      token: jwt.sign({id, company}, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       })
     });

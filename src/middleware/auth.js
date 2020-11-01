@@ -14,8 +14,8 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, authConfig.secret);
 
-    req.id = decoded.id;
-    req.company = decoded.company;
+    req.authId = decoded.id;
+    req.authCompany = decoded.company;
 
     return next();
   } catch (err) {

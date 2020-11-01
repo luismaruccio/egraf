@@ -56,7 +56,9 @@ async function getById(id, getPasswords = false) {
     }
 }
 
-async function getAll() {
+async function getAll(company = 0) {
+    const companyQuery = company > 0 ? "and company = ?" : "";
+
     const query = `
     SELECT
         id,
@@ -68,9 +70,10 @@ async function getAll() {
     FROM
         users
     WHERE
-        enable = ?`;
+        enable = ?
+        ${companyQuery}`;
 
-    const parms = Object.assign({}, [1])
+    const parms = Object.assign({}, [1, company])
 
     try {
         const queryResult = await database.executeQuery(query, parms);
