@@ -5,6 +5,7 @@ const mUser = require('../model/user')
 const cryptHelper = require('../helper/cryptHelper')
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth')
+const url = require('url');
 
 async function insertUser(req, res, next){
 
@@ -50,6 +51,9 @@ async function insertUser(req, res, next){
 }
 
 async function getAll(req, res, next){
+
+    console.log(req);
+
 
     try {
         const users = await mUser.getAllUser();
@@ -100,12 +104,9 @@ async function update(req, res, next){
 
 async function deleteUser(req, res, next){
 
-    if(!req.body || req.body === ''){
-        res.status(400).send({ message: 'O corpo da requisição está em branco.' }).end()
-        return null
-    }
+    const queryObject = url.parse(req.url,true).query;
 
-    const id = req.body.id;
+    const id = queryObject.id;
 
     const originalUser = await mUser.getUserById(id);
 
