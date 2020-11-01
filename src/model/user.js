@@ -43,8 +43,6 @@ async function getById(id, getPasswords = false) {
     WHERE
         id = ?`;
 
-    console.log(query);
-
     const parms = Object.assign({}, [id])
 
     try {
@@ -77,7 +75,6 @@ async function getAll(company = 0) {
 
     try {
         const queryResult = await database.executeQuery(query, parms);
-        console.log(queryResult);
         return queryResult
     } catch (error) {
         console.log(error)
@@ -97,7 +94,6 @@ async function update(id, user){
         id = ?`
     const {name, email, password, level, company} = user;
     const parms = Object.assign({}, [name, email, password, level, company, id])
-    console.log(parms)
     try {
         const queryResult = await database.executeQuery(query, parms)
         console.log(queryResult)

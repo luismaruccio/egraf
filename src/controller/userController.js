@@ -9,11 +9,6 @@ const url = require('url');
 
 async function insertUser(req, res, next){
 
-    //console.log(req)
-
-    console.log(req.body)
-
-
     if(!req.body || req.body === ''){
         res.status(400).send({ message: 'O corpo da requisição está em branco.' }).end()
         return null
@@ -51,8 +46,6 @@ async function insertUser(req, res, next){
 }
 
 async function getAll(req, res, next){
-
-    console.log(req);
 
     const company = req.authCompany;
 

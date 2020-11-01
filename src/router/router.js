@@ -13,7 +13,8 @@ const authMiddleware = require('../middleware/auth')
 /**
  * Controllers
  */
-const users = require('../controller/user')
+const users = require('../controller/userController')
+const clients = require('../controller/clientController')
 
 /**
  * Routes
@@ -32,6 +33,10 @@ router.route('/users').get(users.getAll)
 router.route('/users').put(users.update)
 router.route('/users').delete(users.delete)
 
+router.route('/clients').post(clients.insert)
+router.route('/clients').get(clients.getAll)
+router.route('/clients').put(clients.update)
+router.route('/clients').delete(clients.delete)
 
 /**
 routes.post('/login', UserController.login);
