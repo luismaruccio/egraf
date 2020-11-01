@@ -63,7 +63,8 @@ async function getById(id) {
         complement,
         tellNumber,
         email,
-        company
+        company,
+        enable
     FROM
         clients
     WHERE
@@ -108,8 +109,7 @@ async function getAll(company = 0) {
 
     try {
         const queryResult = await database.executeQuery(query, parms);
-        const [clients, meta] = await queryResult;
-        return clients
+        return queryResult
     } catch (error) {
         console.log(error)
     }
@@ -138,7 +138,6 @@ async function update(id, user) {
 
     try {
         const queryResult = await database.executeQuery(query, parms)
-        console.log(queryResult)
         return queryResult
     } catch (error) {
         console.log(error)
@@ -157,7 +156,6 @@ async function falseDelete(id) {
     console.log(parms)
     try {
         const queryResult = await database.executeQuery(query, parms)
-        console.log(queryResult)
         return queryResult
     } catch (error) {
         console.log(error)
