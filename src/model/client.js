@@ -30,15 +30,17 @@ async function insert(client) {
         name,
         cpf,
         street,
+        district,
         number,
         city,
         states,
+        cep,
         complement,
         tellNumber,
         email,
         company
     ) 
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     const parms = Object.assign({}, client)
     console.log(parms)
     try {
@@ -57,9 +59,11 @@ async function getById(id) {
         name,
         cpf,
         street,
+        district,
         number,
         city,
         states,
+        cep,
         complement,
         tellNumber,
         email,
@@ -92,9 +96,11 @@ async function getAll(company = 0) {
         name,
         cpf,
         street,
+        district,
         number,
         city,
         states,
+        cep,
         complement,
         tellNumber,
         email,
@@ -123,9 +129,11 @@ async function update(id, user) {
         name = ?,
         cpf = ?,
         street = ?,
+        district = ?,
         number = ?,
         city = ?,
         states = ?,
+        cep = ?,
         complement = ?,
         tellNumber = ?,
         email = ?,
@@ -133,8 +141,8 @@ async function update(id, user) {
     WHERE
         id = ?
     `
-    const {name, cpf, street, number, city, states, complement, tellNumber, email, company} = user;
-    const parms = Object.assign({}, [name, cpf, street, number, city, states, complement, tellNumber, email, company, id]);
+    const {name, cpf, street, district, number, city, states, cep, complement, tellNumber, email, company} = user;
+    const parms = Object.assign({}, [name, cpf, street, district, number, city, states, cep, complement, tellNumber, email, company, id]);
 
     try {
         const queryResult = await database.executeQuery(query, parms)
