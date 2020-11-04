@@ -15,6 +15,7 @@ const authMiddleware = require('../middleware/auth')
  */
 const users = require('../controller/userController')
 const clients = require('../controller/clientController')
+const products = require('../controller/productController')
 
 /**
  * Routes
@@ -38,17 +39,9 @@ router.route('/clients').get(clients.getAll)
 router.route('/clients').put(clients.update)
 router.route('/clients').delete(clients.delete)
 
-/**
-routes.post('/login', UserController.login);
-
-routes.use(authMiddleware);
-
-routes.post('/users', UserController.insert);
-routes.get('/users', UserController.getAll)
-routes.put('/users', UserController.update);
-routes.delete('/users', UserController.delete);
-
-*/
-
+router.route('/products').post(products.insert)
+router.route('/products').get(products.getAll)
+router.route('/products').put(products.update)
+router.route('/products').delete(products.delete)
 
 module.exports = router
