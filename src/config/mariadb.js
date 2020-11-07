@@ -1,8 +1,8 @@
 module.exports = {
-    host: '185.201.10.94',
+    host: '50.116.87.149',
     port: '3306',
-    database: 'u750650495_egraf',
-    user: 'u750650495_adm',
+    database: 'spacem94_egraf',
+    user: 'spacem94_api',
     password: 'Ef@159753',
     connectionLimit: 10,
     compress: true,
