@@ -84,7 +84,6 @@ async function update(req, res, next) {
     } catch (error) {
         next(error)
     }
-
 }
 
 async function deleteProduct(req, res, next){

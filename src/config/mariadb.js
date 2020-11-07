@@ -1,9 +1,9 @@
 module.exports = {
-    host: 'confly.com.br',
+    host: '185.201.10.94',
     port: '3306',
-    database: 'egraf2',
-    user: 'confly',
-    password: '123456cf',
+    database: 'u750650495_egraf',
+    user: 'u750650495_adm',
+    password: 'Ef@159753',
     connectionLimit: 10,
     compress: true,
     rowsAsArray: false,
