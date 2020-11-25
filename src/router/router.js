@@ -16,6 +16,8 @@ const authMiddleware = require('../middleware/auth')
 const users = require('../controller/userController')
 const clients = require('../controller/clientController')
 const products = require('../controller/productController')
+const serviceOrders = require('../controller/serviceOrdersController')
+const itemServiceOrders = require('../controller/itemsServiceOrdersController')
 
 /**
  * Routes
@@ -43,5 +45,10 @@ router.route('/products').post(products.insert)
 router.route('/products').get(products.getAll)
 router.route('/products').put(products.update)
 router.route('/products').delete(products.delete)
+
+router.route('/serviceOrders').post(serviceOrders.insert, itemServiceOrders.insert)
+router.route('/serviceOrders').put(serviceOrders.update, itemServiceOrders.update)
+router.route('/serviceOrders').get(serviceOrders.getAll, itemServiceOrders.getAll)
+router.route('/serviceOrders').delete(serviceOrders.delete, itemServiceOrders.delete)
 
 module.exports = router
