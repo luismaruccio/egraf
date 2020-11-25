@@ -10,9 +10,9 @@ function ParseNumberToDB(number) {
 
 function ParseNumberToBRLocale(number, currency = false) {
     if (currency)
-        return Number(number).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number);
     else
-        return Number(number).toLocaleString('pt-BR');
+        return new Intl.NumberFormat('pt-BR').format(number);
 }
 
 function TinyIntToBool(number) {

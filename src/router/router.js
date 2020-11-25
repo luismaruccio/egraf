@@ -18,6 +18,7 @@ const clients = require('../controller/clientController')
 const products = require('../controller/productController')
 const serviceOrders = require('../controller/serviceOrdersController')
 const itemServiceOrders = require('../controller/itemsServiceOrdersController')
+const payments = require('../controller/paymentController')
 
 /**
  * Routes
@@ -50,5 +51,10 @@ router.route('/serviceOrders').post(serviceOrders.insert, itemServiceOrders.inse
 router.route('/serviceOrders').put(serviceOrders.update, itemServiceOrders.update)
 router.route('/serviceOrders').get(serviceOrders.getAll, itemServiceOrders.getAll)
 router.route('/serviceOrders').delete(serviceOrders.delete, itemServiceOrders.delete)
+
+router.route('/payments').post(payments.insert)
+router.route('/payments').get(payments.getAll)
+router.route('/payments').put(payments.update)
+router.route('/payments').delete(payments.delete)
 
 module.exports = router
