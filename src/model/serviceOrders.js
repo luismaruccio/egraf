@@ -7,6 +7,7 @@ async function insert(serviceOrders) {
     (
         client,
         user,
+        description,
         requestDate,
         deliveryDate,
         totalPrice,
@@ -14,9 +15,9 @@ async function insert(serviceOrders) {
         paymentStatus,
         company
     ) 
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?)`
-    const {client, user, requestDate, deliveryDate, totalPrice, status, paymentStatus, company} = serviceOrders;
-    const parms = Object.assign({}, [client, user, requestDate, deliveryDate, totalPrice, status, paymentStatus, company])
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    const {client, user, description, requestDate, deliveryDate, totalPrice, status, paymentStatus, company} = serviceOrders;
+    const parms = Object.assign({}, [client, user, description, requestDate, deliveryDate, totalPrice, status, paymentStatus, company])
     try {
         const queryResult = await database.executeQuery(query, parms)
         console.log(queryResult)
@@ -32,6 +33,7 @@ async function getById(id) {
         id,
         client,
         user,
+        description,
         requestDate,
         deliveryDate,
         totalPrice,
@@ -64,6 +66,7 @@ async function getAll(company = 0) {
         id,
         client,
         user,
+        description,
         requestDate,
         deliveryDate,
         totalPrice,
@@ -92,6 +95,7 @@ async function update(id, serviceOrders) {
     SET
         client = ?,
         user = ?,
+        description = ?,
         requestDate = ?,
         deliveryDate = ?,
         totalPrice = ?,
@@ -100,8 +104,8 @@ async function update(id, serviceOrders) {
         company = ?
     WHERE
         id = ?`
-        const {client, user, requestDate, deliveryDate, totalPrice, status, paymentStatus, company} = serviceOrders;
-        const parms = Object.assign({}, [client, user, requestDate, deliveryDate, totalPrice, status, paymentStatus, company, id])
+        const {client, user, description, requestDate, deliveryDate, totalPrice, status, paymentStatus, company} = serviceOrders;
+        const parms = Object.assign({}, [client, user, description, requestDate, deliveryDate, totalPrice, status, paymentStatus, company, id])
     try {
         const queryResult = await database.executeQuery(query, parms)
         console.log(queryResult)
@@ -136,6 +140,7 @@ async function treatServiceOrdersValues(serviceOrdersFromDB){
                     id: serviceOrder.id,
                     client: serviceOrder.client,
                     user: serviceOrder.user,
+                    description: serviceOrder.description,
                     requestDate: utils.ParseDateFormat(serviceOrder.requestDate),
                     deliveryDate: serviceOrder.deliveryDate == undefined ? null : utils.ParseDateFormat(serviceOrder.deliveryDate),
                     totalPrice:  utils.ParseNumberToBRLocale(serviceOrder.totalPrice, true),

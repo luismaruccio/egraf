@@ -12,6 +12,7 @@ async function insert(req, res, next) {
     const serviceOrders = {
         client: req.body.client,
         user: req.authId,
+        description: req.body.description,
         requestDate: utils.ParseDateFormat(req.body.requestDate),
         deliveryDate: req.body.deliveryDate == undefined ? null : utils.ParseDateFormat(req.body.deliveryDate),
         totalPrice:  utils.ParseNumberToDB(req.body.totalPrice),
@@ -58,6 +59,7 @@ async function update(req, res, next) {
     const serviceOrders = {
         client: req.body.client,
         user: req.authId,
+        description: req.body.description,
         requestDate: utils.ParseDateFormat(req.body.requestDate),
         deliveryDate: req.body.deliveryDate == undefined ? null : utils.ParseDateFormat(req.body.deliveryDate),
         totalPrice:  utils.ParseNumberToDB(req.body.totalPrice),
