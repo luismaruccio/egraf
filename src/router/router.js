@@ -19,6 +19,7 @@ const products = require('../controller/productController')
 const serviceOrders = require('../controller/serviceOrdersController')
 const itemServiceOrders = require('../controller/itemsServiceOrdersController')
 const payments = require('../controller/paymentController')
+const reports = require('../controller/reportController')
 
 /**
  * Routes
@@ -56,5 +57,9 @@ router.route('/payments').post(payments.insert)
 router.route('/payments').get(payments.getAll)
 router.route('/payments').put(payments.update)
 router.route('/payments').delete(payments.delete)
+
+router.route('/r/monetaryMovements').get(reports.getMonetaryMovements)
+router.route('/r/serviceOrdersByStatus').get(reports.getServiceOrdersByStatus)
+router.route('/r/clientsWithAmountDue').get(reports.getClientsWithAmountDue)
 
 module.exports = router

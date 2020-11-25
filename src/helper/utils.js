@@ -32,7 +32,18 @@ function ParseDateFormat(date, db = true) {
     }
 }
 
+function ParseDay(day) {
+    var dateDay = moment(day, "DD/MM/YYYY");
+    var initialDate = dateDay.hour(0).minute(0).second(0).format("YYYY-MM-DD HH:mm:ss");
+    var endDate = dateDay.hour(23).minute(59).second(59).format("YYYY-MM-DD HH:mm:ss");
+
+    const dates = [initialDate, endDate];
+
+    return dates;
+}
+
 module.exports.ParseNumberToDB = ParseNumberToDB;
 module.exports.ParseNumberToBRLocale = ParseNumberToBRLocale;
 module.exports.TinyIntToBool = TinyIntToBool;
 module.exports.ParseDateFormat = ParseDateFormat;
+module.exports.ParseDay = ParseDay;
