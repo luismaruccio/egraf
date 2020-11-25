@@ -5,6 +5,7 @@ async function insert(payment) {
     const query = `
     INSERT INTO payment
     (
+        description,
         user,
         entryExit,
         date,
@@ -12,7 +13,7 @@ async function insert(payment) {
         amount,
         company
     ) 
-    VALUES(?, ?, ?, ?, ?,?)`
+    VALUES(?, ?, ?, ?, ?, ?, ?)`
     const parms = Object.assign({}, payment)
     try {
         const queryResult = await database.executeQuery(query, parms)
@@ -28,6 +29,7 @@ async function getById(id) {
     SELECT
         id,
         user,
+        description,
         entryExit,
         date,
         serviceOrder,
@@ -59,6 +61,7 @@ async function getAll(company = 0) {
     SELECT
         id,
         user,
+        description,
         entryExit,
         date,
         serviceOrder,
@@ -87,6 +90,7 @@ async function treatPaymentsValues(paymentsFromDB){
         return {
                     id: payment.id,
                     user: payment.user,
+                    description: payment.description,
                     entryExit: payment.entryExit,
                     date: utils.ParseDateFormat(payment.date),
                     serviceOrder: payment.serviceOrder,
@@ -102,6 +106,7 @@ async function update(id, payment) {
     const query = `
     UPDATE payment
     SET
+        description = ?,
         user = ?,
         entryExit = ?,
         date = ?,
@@ -110,8 +115,8 @@ async function update(id, payment) {
         company = ?
     WHERE
         id = ?`
-    const {user, entryExit, date, serviceOrder, amount, company} = payment;
-    const parms = Object.assign({}, [user, entryExit, date, serviceOrder, amount, company, id])
+    const {description, user, entryExit, date, serviceOrder, amount, company} = payment;
+    const parms = Object.assign({}, [description, user, entryExit, date, serviceOrder, amount, company, id])
     try {
         const queryResult = await database.executeQuery(query, parms)
         console.log(queryResult)

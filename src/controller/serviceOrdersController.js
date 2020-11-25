@@ -27,6 +27,7 @@ async function insert(req, res, next) {
             var serviceOrder = await mServiceOrder.getById(result.insertId);
             serviceOrder.requestDate = utils.ParseDateFormat(serviceOrder.requestDate, false);
             serviceOrder.deliveryDate = req.body.deliveryDate == null ? null : utils.ParseDateFormat(serviceOrder.deliveryDate, false);
+            serviceOrder.totalPrice = utils.ParseNumberToBRLocale(serviceOrder.totalPrice, true);
             req.serviceOrder = serviceOrder;
             return next();            
         }else{
@@ -72,6 +73,7 @@ async function update(req, res, next) {
             var serviceOrder = await mServiceOrder.getById(id);
             serviceOrder.requestDate = utils.ParseDateFormat(serviceOrder.requestDate, false);
             serviceOrder.deliveryDate = req.body.deliveryDate == null ? null : utils.ParseDateFormat(serviceOrder.deliveryDate, false);
+            serviceOrder.totalPrice = utils.ParseNumberToBRLocale(serviceOrder.totalPrice, true);
             req.serviceOrder = serviceOrder;
             return next();            
         }else{

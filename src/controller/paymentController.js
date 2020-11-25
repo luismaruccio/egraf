@@ -10,6 +10,7 @@ async function insert(req, res, next) {
     }
 
     const paymentToInsert = {
+        description: req.body.description,
         user: req.authId,
         entryExit: req.body.entryExit,
         date: utils.ParseDateFormat(req.body.date),
@@ -63,6 +64,7 @@ async function update(req, res, next) {
     }
 
     const payment = {
+        description: req.body.description,
         user: req.authId,
         entryExit: req.body.entryExit,
         date: utils.ParseDateFormat(req.body.date),

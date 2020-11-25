@@ -138,7 +138,7 @@ async function treatServiceOrdersValues(serviceOrdersFromDB){
                     user: serviceOrder.user,
                     requestDate: utils.ParseDateFormat(serviceOrder.requestDate),
                     deliveryDate: serviceOrder.deliveryDate == undefined ? null : utils.ParseDateFormat(serviceOrder.deliveryDate),
-                    totalPrice:  utils.ParseNumberToDB(serviceOrder.totalPrice),
+                    totalPrice:  utils.ParseNumberToBRLocale(serviceOrder.totalPrice, true),
                     status: serviceOrder.status,
                     paymentStatus: serviceOrder.paymentStatus,
                     company: serviceOrder.company
